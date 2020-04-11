@@ -3,6 +3,7 @@ import {Router} from "@reach/router";
 import Questions from "./Questions";
 import Question from "./Question";
 import AskQuestion from "./AskQuestion";
+import { objectExpression } from '@babel/types';
 
 class App extends Component {
     constructor(props) {
@@ -49,12 +50,22 @@ class App extends Component {
         return this.state.questions.find(findFunction);
     }
 
-    updateQuestion(newQuestion) {
-        const toFind = q => newQuestion.id === parseInt(q.id);
-        let oldQuestion = this.state.questions.find(toFind);
+    updateQuestion(id, newAnswer) {
+        var questionsArr = this.state.questions.filter(q => {
+            return q.id !== id;
+        });
 
-        this.setState({questions: {newQuestion}})
-        console.error(newQuestion)
+        var question = this.state.questions.find(q => {
+            return q.id === id;
+        });
+
+        question.answers = [...question.answers, newAnswer];
+
+        questionsArr = [...questionsArr, question];
+
+        this.setState({
+            questions: questionsArr
+        });
     }
 
     render() {
