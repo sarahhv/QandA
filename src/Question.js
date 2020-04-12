@@ -4,7 +4,7 @@ import PostAnswer from "./PostAnswer";
 
 class Question extends Component {
     addAnswer(answer, question) {
-        this.props.updateQuestion(question.id, answer);
+        this.props.postAnswer(question.id, answer);
     }
 
     render() {

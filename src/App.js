@@ -10,38 +10,36 @@ class App extends Component {
 
         this.state = {
             questions: [
-                {id: 0, title: "What is pizza?", answers: ["Pizza is love <3!"]},
-                {id: 1, title: "What is love?", answers: ["It's like the song: Everything is Awesome!"]}
             ]
         }
     }
-/*Routes*/
-    // Return all recipes in data
-/*    app.get('/api/questions', (req, res) => res.json(question));
 
-    //PostAnswer
-    app.post('/api/questions/:id', (req, res) => {
-        const id = parseInt(req.params.id);
-        const text = req.body.text;
-        const question = question.find(q => q.id === id);
-        question.answers.push(text);
-        console.log(question);
+    componentDidMount() {
+        this.getData();
+    }
 
-        res.json({msg: "Answer added", question: question});
-});*/
+    //Fetch data from the API and putting it in the state
+    async getData() {
+        const url = "http://localhost:8080/api/questions";
+        const response = await fetch(url);
+        const data = await response.json();
+        this.setState({
+            questions: data
+        })
+    }
 
-/*Start!*/
-    /*app.listen(port, ()=>console.log(`${appName} API running on port ${port}!`));
-*/
     addQuestion(title) {
         const newQuestion = {
             id: Math.floor(Math.random()*1000000),
             title: title,
         };
-        this.setState({
+        this.postQuestion(newQuestion);
+
+//Used this before API
+/*        this.setState({
             questions: [...this.state.questions, newQuestion]
         });
-        // console.log(newQuestion);
+        // console.log(newQuestion);*/
     }
 
     getQuestion(id) {
@@ -49,7 +47,43 @@ class App extends Component {
         return this.state.questions.find(findFunction);
     }
 
-    updateQuestion(id, newAnswer) {
+    async postAnswer(id, text) {
+        console.log("postAnswer", id, text);
+        const url = `http://localhost:8080/api/questions/${id}/answers`;
+
+        const response = await fetch(url, {
+            headers: {
+                'Content-type' : 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                text: text
+            })
+        });
+        const data = await response.json();
+        console.log("Printing the response", data);
+        this.getData();
+    }
+
+    async postQuestion(question) {
+        console.log("postQuestion", question);
+        const url = `http://localhost:8080/api/question`;
+
+        const response = await fetch(url, {
+            headers: {
+                'Content-type' : 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                question: question
+            })
+        });
+        const data = await response.json();
+        console.log("Printing the response", data);
+        this.getData();
+    }
+//Used this before i had an API
+/*    updateQuestion(id, newAnswer) {
         var questionsArr = this.state.questions.filter(q => {
             return q.id !== id;
         });
@@ -65,7 +99,7 @@ class App extends Component {
         this.setState({
             questions: questionsArr
         });
-    }
+    }*/
 
     render() {
     return(
@@ -75,7 +109,7 @@ class App extends Component {
                 <Questions path="/" data={this.state.questions}></Questions>
                 <Question path="/question/:id"
                           getQuestion={(id) => this.getQuestion(id)}
-                          updateQuestion={this.updateQuestion.bind(this)}
+                          postAnswer={(id, text) => this.postAnswer(id, text)}
                 >
                 </Question>
                 <AskQuestion path="/Ask-a-question" submit={(title) => this.addQuestion(title)}></AskQuestion>
