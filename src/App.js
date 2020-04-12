@@ -3,7 +3,6 @@ import {Router} from "@reach/router";
 import Questions from "./Questions";
 import Question from "./Question";
 import AskQuestion from "./AskQuestion";
-import { objectExpression } from '@babel/types';
 
 class App extends Component {
     constructor(props) {
@@ -74,7 +73,11 @@ class App extends Component {
             <h1>Question and answers app</h1>
             <Router>
                 <Questions path="/" data={this.state.questions}></Questions>
-                <Question path="/question/:id" getQuestion={(id) => this.getQuestion(id)} updateQuestion={this.updateQuestion.bind(this)}></Question>
+                <Question path="/question/:id"
+                          getQuestion={(id) => this.getQuestion(id)}
+                          updateQuestion={this.updateQuestion.bind(this)}
+                >
+                </Question>
                 <AskQuestion path="/Ask-a-question" submit={(title) => this.addQuestion(title)}></AskQuestion>
             </Router>
             <div>
