@@ -30,8 +30,8 @@ class App extends Component {
 
     addQuestion(title) {
         const newQuestion = {
-            id: Math.floor(Math.random()*1000000),
-            title: title,
+                title: title,
+                answers: []
         };
         this.postQuestion(newQuestion);
 
@@ -43,13 +43,13 @@ class App extends Component {
     }
 
     getQuestion(id) {
-        const findFunction = question => question.id === parseInt(id);
+        const findFunction = question => question._id === id;
         return this.state.questions.find(findFunction);
     }
 
-    async postAnswer(id, text) {
-        console.log("postAnswer", id, text);
-        const url = `http://localhost:8080/api/questions/${id}/answers`;
+    async postAnswer(id, answer) {
+        console.log("postAnswer", id, answer);
+        const url = `http://localhost:8080/api/question/${id}/answers`;
 
         const response = await fetch(url, {
             headers: {
@@ -57,7 +57,7 @@ class App extends Component {
             },
             method: 'POST',
             body: JSON.stringify({
-                text: text
+                answer: answer
             })
         });
         const data = await response.json();
@@ -82,6 +82,26 @@ class App extends Component {
         console.log("Printing the response", data);
         this.getData();
     }
+
+    async putVote (qId, answer, vote) {
+        console.log("PutVote", answer, vote);
+        const aId = answer._id;
+        const url = `http://localhost:8080/api/question/${qId}/answers/${aId}`;
+
+        const response = await fetch(url, {
+            headers: {
+                'Content-type' : 'application/json'
+            },
+            method: 'PUT',
+            body: JSON.stringify({
+                vote: vote
+            })
+        });
+        const data = await response.json();
+        console.log("Putting the response", data);
+        this.getData();
+    }
+
 //Used this before i had an API
 /*    updateQuestion(id, newAnswer) {
         var questionsArr = this.state.questions.filter(q => {
@@ -110,6 +130,7 @@ class App extends Component {
                 <Question path="/question/:id"
                           getQuestion={(id) => this.getQuestion(id)}
                           postAnswer={(id, text) => this.postAnswer(id, text)}
+                          putVote={(qId, answer, vote) => this.putVote(qId, answer, vote)}
                 >
                 </Question>
                 <AskQuestion path="/Ask-a-question" submit={(title) => this.addQuestion(title)}></AskQuestion>

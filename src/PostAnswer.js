@@ -22,7 +22,8 @@ class PostAnswer extends Component {
     render() {
         return (
             <>
-                <input type="text" placeholder="Your answer" name="answer" onChange={event => this.onChange(event)}/><br/>
+                <input type="text" placeholder="Your answer" name="answer" onChange={event => this.onChange(event)}/>
+                <br/>
                 <button onClick={_ => this.onSubmit()}>Add Answer</button>
                 <br/>
             </>

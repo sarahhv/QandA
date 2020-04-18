@@ -4,8 +4,8 @@ import {Link} from "@reach/router";
 class Questions extends Component {
     render() {
         const mapFunction = elm =>
-            <li key={elm.id}>
-                <Link to={"/question/"+elm.id}>{elm.title}</Link>
+            <li key={elm._id}>
+                <Link to={"/question/"+elm._id}>{elm.title}</Link>
             </li>;
 
         let questions = this.props.data;
