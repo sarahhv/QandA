@@ -24,10 +24,12 @@ app.use(cors()); // Avoid CORS errors. https://en.wikipedia.org/wiki/Cross-origi
     }
 ];*/
 
+const url = process.env.MONGO_URL || 'mongodb://localhost/qa1';
+
+
 (async _ => {
     //Connection to local database
     try {
-        const url = 'mongodb://localhost/qa1';
         await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
     } catch (e) {
         console.error(e);
@@ -79,7 +81,6 @@ app.get('/api/questions', (req, res) => {
     (async _ => {
         //Connection to local database
         try {
-            const url = 'mongodb://localhost/qa1';
             await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
         } catch (e) {
             console.error(e);
@@ -100,7 +101,6 @@ app.post('/api/question/:id/answers', (req, res) => {
     (async _ => {
         //Connection to local database
         try {
-            const url = 'mongodb://localhost/qa1';
             await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
         } catch (e) {
             console.error(e);
@@ -132,7 +132,6 @@ app.post('/api/question', (req, res) => {
     (async _ => {
         //Connection to local database
         try {
-            const url = 'mongodb://localhost/qa1';
             await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
         } catch (e) {
             console.error(e);
@@ -161,7 +160,6 @@ app.put('/api/question/:qId/answers/:aId', (req, res) => {
     (async _ => {
         //Connection to local database
         try {
-            const url = 'mongodb://localhost/qa1';
             await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
         } catch (e) {
             console.error(e);
