@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const path = require('path');
+
 
 /**** Configuration ****/
 const appName = "Express API QandA"; // Change the name of your server app!
@@ -13,6 +15,7 @@ const app = express(); // Get the express app object.
 app.use(bodyParser.json()); // Add middleware that parses JSON from the request body.
 app.use(morgan('combined')); // Add middleware that logs all http requests to the console.
 app.use(cors()); // Avoid CORS errors. https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
+app.use(express.static('../client/build')); // Needed for serving production build of React
 
 /**** Database ****/
 const questionDB = require('./question_db')(mongoose);
