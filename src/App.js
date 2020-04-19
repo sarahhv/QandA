@@ -20,7 +20,7 @@ class App extends Component {
 
     //Fetch data from the API and putting it in the state
     async getData() {
-        const url = "http://localhost:8080/api/questions";
+        const url = "/api/questions";
         const response = await fetch(url);
         const data = await response.json();
         this.setState({
@@ -34,13 +34,13 @@ class App extends Component {
                 answers: []
         };
         this.postQuestion(newQuestion);
-
+    }
 //Used this before API
 /*        this.setState({
             questions: [...this.state.questions, newQuestion]
         });
         // console.log(newQuestion);*/
-    }
+
 
     getQuestion(id) {
         const findFunction = question => question._id === id;
@@ -49,7 +49,7 @@ class App extends Component {
 
     async postAnswer(id, answer) {
         console.log("postAnswer", id, answer);
-        const url = `http://localhost:8080/api/question/${id}/answers`;
+        const url = `/api/question/${id}/answers`;
 
         const response = await fetch(url, {
             headers: {
@@ -67,7 +67,7 @@ class App extends Component {
 
     async postQuestion(question) {
         console.log("postQuestion", question);
-        const url = `http://localhost:8080/api/question`;
+        const url = `/api/question`;
 
         const response = await fetch(url, {
             headers: {
@@ -86,7 +86,7 @@ class App extends Component {
     async putVote (qId, answer, vote) {
         console.log("PutVote", answer, vote);
         const aId = answer._id;
-        const url = `http://localhost:8080/api/question/${qId}/answers/${aId}`;
+        const url = `/api/question/${qId}/answers/${aId}`;
 
         const response = await fetch(url, {
             headers: {
