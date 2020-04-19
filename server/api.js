@@ -27,44 +27,6 @@ const questionDB = require('./question_db')(mongoose);
     }
 ];*/
 
-(async _ => {
-    //Connection to local database
-    try {
-        await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
-    } catch (e) {
-        console.error(e);
-    }
-    console.log("Database connected:", mongoose.connection.name);
-
-    const q1 = new Question({
-        title: "What is pizza?",
-        answers: [
-            {text: "Pizza is love <3!", vote: 0}]
-    });
-
-    const q2 = new Question({
-        title: "What is love?",
-        answers: [
-            {text:"It's like the song: Everything is Awesome!", vote: 0}]
-    });
-
-    //Save the Questions
-    try {
-        /*        let savedQ1 = await q1.save();
-                let savedQ2 = await q2.save();
-                console.log("Questions saved.", savedQ1, savedQ2);*/
-    } catch (error) {
-        console.error(error);
-    }
-
-    let question = await Question.findById("5e9af697de2c6134ac8670d7");
-    console.log("Found a question:", question);
-
-    await mongoose.disconnect(); // It's good practice to disconnect before closing the app.
-    console.log("Databased disconnected");
-
-})();
-
 /**** Routes ****/
 // API
 app.get('/api/questions', async (req, res) => {
