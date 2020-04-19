@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "asdf",
   "main": "api.js",
+  "engines": {
+    "node": "13.7.x"
+  },
   "scripts": {
     "start": "node api.js",
     "test": "echo \"Error: no test specified\" && exit 1"

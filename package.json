@@ -2,6 +2,9 @@
   "name": "QandA",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": "13.7.x"
+  },
   "scripts": {
     "start": "cd server && node api.js",
     "dev": "cd client && npm start",
