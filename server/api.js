@@ -39,7 +39,7 @@ app.get('/api/questions', async (req, res) => {
 
 // PostQuestion
 app.post('/api/question', async (req, res) => {
-    const createQuestionResult = await questionDB.createQuestion(reg.body.question);
+    const createQuestionResult = await questionDB.createQuestion(req.body.question);
     res.json({msg: "Question added", question: createQuestionResult});
 });
 

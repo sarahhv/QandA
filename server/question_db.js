@@ -27,11 +27,10 @@ class Db {
         }
     }
 
-    async createQuestion(question) {
+    async createQuestion(newQuestion) {
         try {
-            const question = new this.Question(question);
-            let qSaved = await question.save();
-            return qSaved;
+            const question = new this.Question(newQuestion);
+            return await question.save();
         } catch (error) {
             console.error(error);
             return {};
@@ -42,8 +41,7 @@ class Db {
         try {
             const question = await this.Question.findById(qId);
             question.answers.push(answer);
-            let aSaved = await question.save();
-            return aSaved;
+            return await question.save();
         } catch (error) {
             console.error(error);
             return {};
@@ -55,8 +53,7 @@ class Db {
             const question = await this.Question.findById(qId);
             const answer = await question.answers.find(a => a.id === aId);
             answer.vote = vote;
-            let vSaved = await question.save();
-            return vSaved;
+            return await question.save();
         } catch (error) {
             console.error(error);
             return {};
